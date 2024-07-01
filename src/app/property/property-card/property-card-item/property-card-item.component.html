@@ -1,0 +1,25 @@
+<div
+  class="row"
+  style="margin-top: 0%; margin-bottom: 5%; margin-right: 1%; margin-left: 1%"
+>
+  <div class="card shadow-sm">
+    <img
+      src="{{ Property.Image }}"
+      alt=""
+      style="margin: 2%; margin-bottom: 0"
+    />
+    <div class="card-body">
+      <h3 class="card-Name">{{ Property.Name }}({{ Property.Type }})</h3>
+      <p class="card-Description">
+        {{ Property.Description }}
+      </p>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="btn-group">
+          <h4 class="card-Description">
+            Price : {{ Property.Price | currency : "INR" }} {{ "Cr" }}
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
