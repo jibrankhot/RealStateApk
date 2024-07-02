@@ -1,5 +1,19 @@
-.card-images {
-  height: calc(70%);
-  width: calc(100%);
-  object-fit: cover;
+.PropertyImage {
+  overflow: hidden;
+}
+.row:hover img {
+  transform: scale(1.1, 1.1);
+  transition-duration: 500ms;
+  transition-timing-function: ease-out;
+  height: 15rem;
+  width: 20rem;
+  opacity: 0.8;
+}
+
+.row img {
+  transform: scale(1, 1);
+  transition-duration: 500ms;
+  transition-timing-function: ease-out;
+  height: 15rem;
+  width: 20rem;
 }
