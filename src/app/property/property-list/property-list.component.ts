@@ -1,59 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { HousingService } from 'src/app/Services/housing.service';
+import { PropertyInterface } from 'src/app/interfaces/property-interface';
 
 @Component({
   selector: 'app-property-list',
   templateUrl: './property-list.component.html',
   styleUrls: ['./property-list.component.css'],
 })
-export class PropertyListComponent {
-  properties: Array<any> = [
-    {
-      id: 1,
-      Name: 'House1',
-      Image: 'assets/house1.jpeg',
-      Description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer ',
-      Price: 10,
-    },
-    {
-      id: 2,
-      Name: 'House2',
-      Image: 'assets/house2.jpeg',
-      Description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer',
-      Price: 12,
-    },
-    {
-      id: 3,
-      Name: 'House3',
-      Image: 'assets/house3.jpeg',
-      Description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer',
-      Price: 15,
-    },
-    {
-      id: 4,
-      Name: 'House4',
-      Image: 'assets/house4.jpeg',
-      Description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer',
-      Price: 20,
-    },
-    {
-      id: 5,
-      Name: 'House5',
-      Image: 'assets/house5.jpeg',
-      Description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer',
-      Price: 22,
-    },
-    {
-      id: 6,
-      Name: 'House6',
-      Image: 'assets/house6.jpeg',
-      Description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer',
-      Price: 27,
-    },
-  ];
+export class PropertyListComponent implements OnInit {
+  Purchaseable = 1;
+  properties: Array<PropertyInterface>;
+  constructor(
+    private route: ActivatedRoute,
+    private housingService: HousingService
+  ) {}
+
+  ngOnInit() {
+    if (this.route.snapshot.url.toString()) {
+      this.Purchaseable = 2;
+    } // means we are on rent-property url or else we are on base url
+    this.housingService.getAllProperties(this.Purchaseable).subscribe(
+      (data: PropertyInterface[]) => {
+        console.log(data);
+        console.log(this.route.snapshot.url.toString());
+        this.properties = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 }

@@ -1,0 +1,60 @@
+<div
+  class="card col-7"
+  style="padding-left: 0; padding-right: 0; margin-left: 18%; margin-top: 2%"
+>
+  <div class="card-header col-12">Add New Property</div>
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit(Form)" #Form="ngForm">
+      <div class="form-group col-12">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          #propName="ngModel"
+          ngModel
+          name="Name"
+          required
+        />
+      </div>
+      <span *ngIf="!propName.valid && propName.touched">
+        {{ BlankNameToast() }}</span
+      >
+      <div class="form-group col-12">
+        <label for="type">Type</label>
+        <input
+          class="form-control"
+          type="text"
+          id="type"
+          #propType="ngModel"
+          ngModel
+          name="Type"
+          required
+        />
+      </div>
+      <div class="form-group col-12">
+        <label for="price">Price</label>
+        <input
+          class="form-control"
+          type="text"
+          id="price"
+          #propPrice="ngModel"
+          ngModel
+          name="Price"
+          required
+        />
+      </div>
+      <div class="form-group col-12">
+        <button
+          [disabled]="!propName.valid"
+          class="btn btn-primary"
+          type="submit"
+          style="margin-right: 1.5%"
+        >
+          Save
+        </button>
+
+        <button class="btn btn-primary" type="reset">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
