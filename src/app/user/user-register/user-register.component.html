@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col-7 m-auto">
+    <div class="card m-auto">
+      <div class="card-header">Register</div>
+      <div class="card-body">
+        <form [formGroup]="registerationForm" (ngSubmit)="onsubmit()">
+          <div class="form-group col-12">
+            <label for="name" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="userName"
+            />
+          </div>
+
+          <span *ngIf="!userName.valid && userName.touched">
+            {{ BlankNameToast() }}</span
+          >
+
+          <div class="parent">
+            <div class="child1">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="text"
+                class="form-control"
+                style="width: 150%"
+                formControlName="Email"
+              />
+            </div>
+            <span *ngIf="!Email.valid && Email.touched">
+              {{ BlankEmailToast() }}
+            </span>
+            <div class="child2">
+              <label for="mobile" class="form-label">Mobile</label>
+              <input
+                type="text"
+                class="form-control"
+                style="width: 115%"
+                formControlName="MobileNo"
+              />
+            </div>
+            <span *ngIf="!MobileNo.valid && MobileNo.touched">
+              {{ BlankMobileNoToast() }}</span
+            >
+          </div>
+
+          <div class="form-group col-12">
+            <label for="passwrod" class="form-label">Password</label>
+            <input
+              type="Password"
+              class="form-control"
+              formControlName="Password"
+            />
+          </div>
+
+          <div class="form-group col-12">
+            <label for="Password" class="form-label">Confirm Password</label>
+            <input
+              type="Password"
+              class="form-control"
+              formControlName="ConfirmPass"
+            />
+          </div>
+
+          <div class="form-group col-12">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="reset" class="btn btn-outline-secondary ml-2">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

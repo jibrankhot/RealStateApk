@@ -1,8 +1,5 @@
-export interface PropertyInterface {
-  id: number;
-  Name: string;
-  Image: string;
+import { BasePropertyInterface } from './property-Baseinterface';
+
+export interface PropertyInterface extends BasePropertyInterface {
   Description: string;
-  Price: number;
-  Purchaseable: string;
 }

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { PropertyInterface } from 'src/app/interfaces/property-interface';
 
@@ -9,4 +8,5 @@ import { PropertyInterface } from 'src/app/interfaces/property-interface';
 })
 export class PropertyCardComponent {
   @Input() Property: PropertyInterface;
+  @Input() hideIcons: boolean;
 }

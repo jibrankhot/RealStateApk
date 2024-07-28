@@ -1,0 +1,12 @@
+.child1 {
+  display: inline-block;
+  padding-left: 2.5%;
+  justify-content: space-between;
+  vertical-align: top;
+}
+.child2 {
+  display: inline-block;
+  margin-left: 20%;
+  justify-content: space-between;
+  vertical-align: top;
+}

@@ -1,0 +1,8 @@
+.card-header > h1 .card-header > h2 .card-header > h3 {
+  color: white;
+}
+.card-header {
+  height: 42px;
+  padding: 4px 10px !important;
+  background-color: #b9d9eb !important;
+}

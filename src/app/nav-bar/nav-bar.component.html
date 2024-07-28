@@ -57,23 +57,77 @@
           >
         </li>
       </ul>
-      <form class="d-flex" style="padding-left: calc(50%)" role="search">
-        <input
-          class="form-control me-2"
-          style="margin-right: calc(5%)"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
+    </div>
+  </div>
 
-        <button
-          style="margin-right: calc(-20%)"
-          class="btn btn-outline-success"
-          type="submit"
+  <div
+    class="container-fluid"
+    style="margin-left: 0"
+    style="padding-right: 0"
+    style="padding-left: 0"
+  >
+    <a
+      *ngIf="!loggedIn()"
+      class="navbar-brand linkcolor"
+      style="margin-left: 83%; font-size: 16px"
+      routerLink="user/register"
+      routerLinkActive="activelink"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Register</a
+    >
+    <a
+      *ngIf="!loggedIn()"
+      class="navbar-brand linkcolor user-link"
+      style="margin-left: 1%; font-size: 16px"
+      routerLink="user/login"
+      routerLinkActive="activelink"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Login</a
+    >
+    <!-- <a
+      *ngIf="loggedIn()"
+      class="navbar-brand linkcolor user-link"
+      (click)="onLogout()"
+      style="margin-left: 93%; font-size: 16px"
+      >Logout</a
+    > -->
+    <div
+      class="btn-group"
+      dropdown
+      placement="bottom left"
+      style="margin-left: 78%; font-size: 16px"
+    >
+      <button
+        id="button-alignment"
+        dropdownToggle
+        type="button"
+        class="btn btn-outline-primary dropdown-toggle"
+        style="font-weight: 500"
+        aria-controls="dropdown-alignment"
+      >
+        Welcome {{ loggedinUser }} <span class="caret"></span>
+      </button>
+      <ul
+        id="dropdown-alignment"
+        *dropdownMenu
+        class="dropdown-menu dropdown-menu-left"
+        role="menu"
+        aria-labelledby="button-alignment"
+      >
+        <a href="#" class="dropdown-item">
+          <i class="fa fa-tachometer"></i> View Dashboard
+        </a>
+
+        <a href="#" class="dropdown-item">
+          <i class="fa fa-user-circle"></i> My Profile
+        </a>
+        <a href="#" class="dropdown-item"
+          ><i class="fa fa-key"></i> Change Password</a
         >
-          Search
-        </button>
-      </form>
+        <a class="dropdown-item" (click)="onLogout()"
+          ><i class="fa fa-sign-out"></i> Logout</a
+        >
+      </ul>
     </div>
   </div>
 </nav>
