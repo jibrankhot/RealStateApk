@@ -1,12 +1,18 @@
 import { Component, Input } from '@angular/core';
-import { PropertyInterface } from 'src/app/interfaces/property-interface';
+import { IPropertyBase } from 'src/app/model/ipropertybase';
+
 
 @Component({
-  selector: 'app-property-card',
-  templateUrl: './property-card.component.html',
-  styleUrls: ['./property-card.component.css'],
-})
+    selector: 'app-property-card',
+    // template: `<h1>I am a card</h1>`,
+    templateUrl: 'property-card.component.html',
+    // styles: ['h1 {font-weight: normal;}']
+    styleUrls: ['property-card.component.css']
+}
+
+)
 export class PropertyCardComponent {
-  @Input() Property: PropertyInterface;
-  @Input() hideIcons: boolean;
+    @Input() property: IPropertyBase;
+    @Input() hideIcons: boolean;
+
 }

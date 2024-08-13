@@ -1,132 +1,58 @@
-<nav
-  class="navbar navbar-expand-lg bg-body-tertiary bg-dark"
-  *ngIf="showNavbar"
->
-  <div
-    class="container-fluid"
-    style="margin-right: 0"
-    style="padding-right: 0"
-    style="padding-left: 0"
-  >
-    <a
-      class="navbar-brand linkcolor"
-      routerLink="home"
-      routerLinkActive="activelink"
-      [routerLinkActiveOptions]="{ exact: true }"
-      >Techmaark</a
-    >
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-4 mb-lg-0">
-        <li class="nav-item" style="padding-left: 3%; padding-top: 1%">
-          <a
-            class="nav-link active linkcolor"
-            aria-current="page"
-            routerLink="/"
-            routerLinkActive="activelink"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Purchase</a
-          >
-        </li>
-        <li class="nav-item" style="padding-left: 3%; padding-top: 1%">
-          <a
-            class="nav-link linkcolor"
-            routerLink="rent-property"
-            routerLinkActive="activelink"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Sales</a
-          >
-        </li>
-        <li class="nav-item" style="padding-left: 3%; padding-top: 1%">
-          <a
-            class="nav-link linkcolor"
-            routerLink="/add-property"
-            routerLinkActive="activelink"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >ManageProperty</a
-          >
-        </li>
-      </ul>
-    </div>
-  </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="/">HSPA</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-  <div
-    class="container-fluid"
-    style="margin-left: 0"
-    style="padding-right: 0"
-    style="padding-left: 0"
-  >
-    <a
-      *ngIf="!loggedIn()"
-      class="navbar-brand linkcolor"
-      style="margin-left: 83%; font-size: 16px"
-      routerLink="user/register"
-      routerLinkActive="activelink"
-      [routerLinkActiveOptions]="{ exact: true }"
-      >Register</a
-    >
-    <a
-      *ngIf="!loggedIn()"
-      class="navbar-brand linkcolor user-link"
-      style="margin-left: 1%; font-size: 16px"
-      routerLink="user/login"
-      routerLinkActive="activelink"
-      [routerLinkActiveOptions]="{ exact: true }"
-      >Login</a
-    >
-    <!-- <a
-      *ngIf="loggedIn()"
-      class="navbar-brand linkcolor user-link"
-      (click)="onLogout()"
-      style="margin-left: 93%; font-size: 16px"
-      >Logout</a
-    > -->
-    <div
-      class="btn-group"
-      dropdown
-      placement="bottom left"
-      style="margin-left: 78%; font-size: 16px"
-    >
-      <button
-        id="button-alignment"
-        dropdownToggle
-        type="button"
-        class="btn btn-outline-primary dropdown-toggle"
-        style="font-weight: 500"
-        aria-controls="dropdown-alignment"
-      >
-        Welcome {{ loggedinUser }} <span class="caret"></span>
-      </button>
-      <ul
-        id="dropdown-alignment"
-        *dropdownMenu
-        class="dropdown-menu dropdown-menu-left"
-        role="menu"
-        aria-labelledby="button-alignment"
-      >
-        <a href="#" class="dropdown-item">
-          <i class="fa fa-tachometer"></i> View Dashboard
-        </a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
 
-        <a href="#" class="dropdown-item">
-          <i class="fa fa-user-circle"></i> My Profile
-        </a>
-        <a href="#" class="dropdown-item"
-          ><i class="fa fa-key"></i> Change Password</a
-        >
-        <a class="dropdown-item" (click)="onLogout()"
-          ><i class="fa fa-sign-out"></i> Logout</a
-        >
+      <li class="nav-item">
+        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active" routerLink="/">Buy <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link"  routerLinkActive="active" routerLink="/rent-property">Rent</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active"  routerLink="/add-property">List Property (Free)</a>
+      </li>
+    </ul>
+
+    <div>
+      <ul class="nav navbar-nav">
+        <li *ngIf="!loggedin()" class="nav-item">
+          <a class="nav-link"
+          routerLink="user/register"
+          routerLinkActive="active"
+          >Register</a>
+        </li>
+        <li *ngIf="!loggedin()" class="nav-item">
+          <a class="nav-link"
+          routerLink="user/login"
+          routerLinkActive="active"
+          >Login</a>
+        </li>
+        <!-- <li *ngIf="loggedin()" class="nav-item">
+          <a class="nav-link" (click)="onLogout()"
+          >Logout</a>
+        </li> -->
+        <div *ngIf="loggedin()" class="dropdown mr-5" dropdown>
+          <a href="#" class="dropdown-toggle text-light" dropdownToggle (click)="false">
+              Welcome {{loggedinUser}}
+          </a>
+          <div class="dropdown-menu" *dropdownMenu>
+              <a href="#"class="dropdown-item">
+                <i class="fas fa-tachometer-alt"></i> View Dashboard</a>
+              <a href="#" class="dropdown-item">
+                <i class="far fa-user-circle"></i> My Profile</a>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-key"></i> Change Password</a>
+              <a (click)='onLogout()' class="dropdown-item">
+                <i class="fas fa-sign-out-alt"></i> Logout</a>
+          </div>
+        </div>
       </ul>
     </div>
   </div>

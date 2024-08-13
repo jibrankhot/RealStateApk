@@ -1,116 +1,147 @@
 <div class="row mb-5">
   <div class="col-8 shadow-lg p-0 bg-white">
     <div class="card">
-      <div class="card-header col-12">
-        <h3>List Your Property</h3>
+      <div class="card-header">
+        <h3>List your Property</h3>
       </div>
       <div class="card-body">
-        <form (ngSubmit)="onSubmit()" #Form="ngForm">
+        <form (ngSubmit)="onSubmit()" [formGroup]="AddPropertyForm">
           <div class="tab-panel">
-            <tabset class="member-tabset" #AddPropTabs>
-              <tab heading="Basic title" id="tab1">
+            <tabset class="member-tabset" #formTabs>
+              <tab heading="Basic Info" formGroupName="BasicInfo">
                 <div class="form-group col-12">
-                  <div class="btn-group btn-grouplbl" btnRadioGroup>
+                  <p>I want to</p>
+                  <div
+                    class="btn-group"
+                    btnRadioGroup
+                    formControlName="SellRent"
+                  >
                     <label
-                      class="btn btn-outline-primary mr-2 PropBtn"
+                      class="btn btn-outline-primary mr-2"
                       btnRadio="1"
+                      tabindex="0"
                       role="button"
                       name="SellRent"
                       >Sell</label
-                    ><label
-                      class="btn btn-outline-primary mr-2 PropBtn"
+                    >
+                    <label
+                      class="btn btn-outline-primary"
                       btnRadio="2"
+                      tabindex="0"
                       role="button"
                       name="SellRent"
                       >Rent</label
                     >
                   </div>
                 </div>
+
                 <div class="form-group col-12">
                   <p>BHK</p>
-                  <div class="btn-group btn-grouplbl" btnRadioGroup>
+                  <div
+                    class="btn-group"
+                    btnRadioGroup
+                    [(ngModel)]="propertyView.BHK"
+                    name="BHK"
+                    [ngModelOptions]="{ standalone: true }"
+                  >
                     <label
                       *ngFor="let bhk of [1, 2, 3, 4]"
-                      class="btn btn-outline-primary mr-2 BHKBtn"
+                      class="btn btn-outline-primary mr-2"
                       [btnRadio]="bhk"
                       tabindex="0"
                       role="button"
-                      name="SellRent"
+                      name="BHK"
                       >{{ bhk }}</label
                     >
                   </div>
                 </div>
+
                 <div class="form-group col-12">
                   <p>Property Type</p>
                   <div
-                    class="btn-group btn-grouplbl"
+                    class="btn-group"
                     btnRadioGroup
-                    name="propType"
+                    formControlName="PType"
                     [(ngModel)]="propertyView.PType"
                   >
                     <label
-                      *ngFor="let propType of propertyTypes"
-                      class="btn btn-outline-primary mr-2 BHKBtn"
-                      [btnRadio]="propType"
+                      *ngFor="let ptype of propertyTypes"
+                      class="btn btn-outline-primary mr-2"
+                      [btnRadio]="ptype"
                       tabindex="0"
                       role="button"
-                      name="SellRent"
-                      >{{ propType }}</label
-                    >
+                      name="PropType"
+                      >{{ ptype }}
+                    </label>
                   </div>
                 </div>
+
                 <div class="form-group col-12">
                   <p>Furnishing Type</p>
-                  <div class="btn-group btn-grouplbl" btnRadioGroup>
+                  <div
+                    class="btn-group"
+                    btnRadioGroup
+                    [(ngModel)]="propertyView.FType"
+                    [ngModelOptions]="{ standalone: true }"
+                    name="FType"
+                  >
                     <label
-                      *ngFor="let furnishType of furnishTypes"
-                      class="btn btn-outline-primary mr-2 BHKBtn"
-                      [btnRadio]="furnishType"
+                      *ngFor="let ftype of furnishTypes"
+                      class="btn btn-outline-primary mr-2"
+                      [btnRadio]="ftype"
                       tabindex="0"
                       role="button"
-                      name="SellRent"
-                      >{{ furnishType }}</label
+                      name="FurnishType"
+                      >{{ ftype }}</label
                     >
                   </div>
                 </div>
+
                 <div class="form-group col-12">
-                  <label for="name">in Building/Society/Project</label>
+                  <label>in Building/Society/Project</label>
                   <input
                     type="text"
                     class="form-control"
-                    #propName="ngModel"
                     ngModel
-                    name="Name"
-                    required
+                    formControlName="Name"
+                    minlength="5"
                     [(ngModel)]="propertyView.Name"
                   />
+                  <!-- <span *ngIf="!propName.valid && propName.touched" class="error-block">
+                      <span *ngIf="propName.errors.required">Please provide name</span>
+                      <span *ngIf="propName.errors.minlength">Name must be atleast 5 char long</span>
+                    </span> -->
                 </div>
-
-                <span *ngIf="!propName.valid && propName.touched">
-                  {{ BlankNameToast() }}</span
-                >
 
                 <div class="form-group col-12">
                   <label>City</label>
-                  <input class="form-control" type="text" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="propertyView.City"
+                    [ngModelOptions]="{ standalone: true }"
+                    name="City"
+                  />
                 </div>
+
                 <div class="form-group col-12">
                   <button
-                    class="btn btn-primary btn-block"
                     type="button"
-                    (click)="selectTab(1)"
+                    class="btn btn-primary btn-block"
+                    (click)="selectTab(1, BasicInfo.valid)"
                   >
                     Next
                   </button>
                 </div>
               </tab>
-              <tab heading="Pricing and Area">
+
+              <tab heading="Pricing and Area" formGroupName="PriceInfo">
                 <div class="form-group col-12">
                   <label>Price (in USD)</label>
                   <input
                     type="text"
                     class="form-control"
-                    name="Price"
+                    formControlName="Price"
                     [(ngModel)]="propertyView.Price"
                   />
                 </div>
@@ -127,7 +158,12 @@
 
                 <div class="form-group col-12">
                   <label>Built Area (in Sqr Feet)</label>
-                  <input type="text" class="form-control" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="propertyView.BuiltArea"
+                    formControlName="BuiltArea"
+                  />
                 </div>
 
                 <div class="form-group col-12">
@@ -139,7 +175,7 @@
                   <button
                     type="button"
                     class="btn btn-primary btn-block"
-                    (click)="selectTab(2)"
+                    (click)="selectTab(2, PriceInfo.valid)"
                   >
                     Next
                   </button>
@@ -147,7 +183,7 @@
                   <button
                     type="button"
                     class="btn btn-primary btn-block"
-                    (click)="selectTab(0)"
+                    (click)="selectTab(0, BasicInfo.valid)"
                   >
                     Back
                   </button>
@@ -179,7 +215,7 @@
                   <button
                     type="button"
                     class="btn btn-primary btn-block"
-                    (click)="selectTab(3)"
+                    (click)="selectTab(3, AddressInfo.valid)"
                   >
                     Next
                   </button>
@@ -187,7 +223,7 @@
                   <button
                     type="button"
                     class="btn btn-primary btn-block"
-                    (click)="selectTab(1)"
+                    (click)="selectTab(1, PriceInfo.valid)"
                   >
                     Back
                   </button>
@@ -196,33 +232,36 @@
 
               <tab heading="Other Details">
                 <div class="form-group col-12">
-                  <p>Ready To Move</p>
-                  <div class="btn-group btn-grouplbl" btnRadioGroup>
+                  <p>Ready to Move</p>
+                  <div class="btn-group" btnRadioGroup>
                     <label
-                      class="btn btn-outline-primary mr-2 RTMBtn"
+                      class="btn btn-outline-primary mr-2"
                       btnRadio="1"
+                      tabindex="0"
                       role="button"
                       name="RTM"
                       >Yes</label
-                    ><label
-                      class="btn btn-outline-primary mr-2 RTMBtn"
+                    >
+                    <label
+                      class="btn btn-outline-primary"
                       btnRadio="2"
+                      tabindex="0"
                       role="button"
                       name="RTM"
                       >No</label
                     >
                   </div>
                 </div>
+
                 <div class="form-group col-3">
                   <label>Possession/Avaialble From</label>
                   <input
                     type="text"
-                    placeholder="Please Select a Date"
                     class="form-control"
                     bsDatepicker
                     [bsConfig]="{
                       containerClass: 'theme-dark-blue',
-                      dateInputFormat: 'DD/MM/YYYY'
+                      dateInputFormat: 'DD-MM-YYYY'
                     }"
                   />
                 </div>
@@ -234,50 +273,59 @@
 
                 <div class="form-group col-12">
                   <p>Gated Community</p>
-                  <div class="btn-group btn-grouplbl" btnRadioGroup>
+                  <div class="btn-group" btnRadioGroup>
                     <label
-                      class="btn btn-outline-primary mr-2 RTMBtn"
+                      class="btn btn-outline-primary mr-2"
                       btnRadio="1"
+                      tabindex="0"
                       role="button"
-                      name="RTM"
+                      name="Gated"
                       >Yes</label
-                    ><label
-                      class="btn btn-outline-primary mr-2 RTMBtn"
+                    >
+                    <label
+                      class="btn btn-outline-primary"
                       btnRadio="2"
+                      tabindex="0"
                       role="button"
-                      name="RTM"
+                      name="Gated"
                       >No</label
                     >
                   </div>
                 </div>
+
                 <div class="form-group col-12">
-                  <p>Main Entrance</p>
-                  <div class="btn-group btn-grouplbl" btnRadioGroup>
+                  <p>Ready to Move</p>
+                  <div class="btn-group" btnRadioGroup>
                     <label
-                      class="btn btn-outline-primary mr-2 EntryBtn"
+                      class="btn btn-outline-primary mr-2"
                       btnRadio="1"
+                      tabindex="0"
                       role="button"
-                      name="RTM"
+                      name="Entrance"
                       >East</label
-                    ><label
-                      class="btn btn-outline-primary mr-2 EntryBtn"
+                    >
+                    <label
+                      class="btn btn-outline-primary"
                       btnRadio="2"
+                      tabindex="0"
                       role="button"
-                      name="RTM"
+                      name="Entrance"
                       >West</label
                     >
                     <label
-                      class="btn btn-outline-primary mr-2 EntryBtn"
-                      btnRadio="2"
+                      class="btn btn-outline-primary"
+                      btnRadio="3"
+                      tabindex="0"
                       role="button"
-                      name="RTM"
+                      name="Entrance"
                       >South</label
                     >
                     <label
-                      class="btn btn-outline-primary mr-2 EntryBtn"
-                      btnRadio="2"
+                      class="btn btn-outline-primary"
+                      btnRadio="4"
+                      tabindex="0"
                       role="button"
-                      name="RTM"
+                      name="Entrance"
                       >North</label
                     >
                   </div>
@@ -296,7 +344,7 @@
                   <button
                     type="button"
                     class="btn btn-primary btn-block"
-                    (click)="selectTab(4)"
+                    (click)="selectTab(4, OtherInfo.valid)"
                   >
                     Next
                   </button>
@@ -304,7 +352,7 @@
                   <button
                     type="button"
                     class="btn btn-primary btn-block"
-                    (click)="selectTab(2)"
+                    (click)="selectTab(2, AddressInfo.valid)"
                   >
                     Back
                   </button>
@@ -322,9 +370,15 @@
                   <button
                     type="button"
                     class="btn btn-primary btn-block"
-                    (click)="selectTab(3)"
+                    (click)="selectTab(3, AddressInfo.valid)"
                   >
                     Back
+                  </button>
+                  <button type="submit" class="btn btn-primary btn-block">
+                    Save
+                  </button>
+                  <button type="reset" class="btn btn-primary btn-block">
+                    Cancel
                   </button>
                 </div>
               </tab>
@@ -341,7 +395,7 @@
     <div class="shadow-lg p-3 bg-white">
       <app-property-card
         [Property]="propertyView"
-        [hideIcons]="true"
+        hideIcons="true"
       ></app-property-card>
     </div>
   </div>

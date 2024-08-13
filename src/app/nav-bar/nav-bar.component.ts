@@ -1,7 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
-import { NavbarService } from '../Services/navbar-service';
-import { Subscription } from 'rxjs/internal/Subscription';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { AlertyfyToastService } from '../Services/alertyfy-toast.service';
 
 @Component({
@@ -9,33 +6,20 @@ import { AlertyfyToastService } from '../Services/alertyfy-toast.service';
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css'],
 })
-export class NavBarComponent implements OnDestroy {
+export class NavBarComponent implements OnInit {
   loggedinUser: string;
-  showNavbar: boolean = true;
-  subscription: Subscription;
-  constructor(
-    private navbarSr: NavbarService,
-    private router: Router,
-    private alertyfy: AlertyfyToastService
-  ) {
-    this.subscription = this.navbarSr.showNavbar.subscribe((value) => {
-      this.showNavbar = value;
-    });
-  }
+  constructor(private alertyfy: AlertyfyToastService) {}
 
-  loggedIn() {
-    this.loggedinUser = localStorage.getItem('token');
+  ngOnInit() {}
+
+  loggedin() {
+    this.loggedinUser = localStorage.getItem('userName');
     return this.loggedinUser;
   }
 
   onLogout() {
-    setTimeout(() => {
-      this.alertyfy.success('User Loggedout Successfully');
-      this.router.navigate(['user', 'login']);
-      localStorage.removeItem('token');
-    }, 500);
-  }
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    this.alertyfy.success('You are logged out !');
   }
 }

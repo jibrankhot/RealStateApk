@@ -9,5 +9,5 @@ export interface BasePropertyInterface {
   BHK: number;
   BuiltArea: number;
   City: string;
-  RTM: number;
+  readyToMove: boolean;
 }

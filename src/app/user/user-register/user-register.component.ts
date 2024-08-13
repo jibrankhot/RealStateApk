@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
   FormGroup,
+  FormControl,
   Validators,
+  FormBuilder,
 } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { User } from 'src/app/interfaces/user';
-import { UserServiceService } from 'src/app/Services/user-service.service';
+import { UserForRegister } from 'src/app/model/user';
 import { AlertyfyToastService } from 'src/app/Services/alertyfy-toast.service';
+import { AuthService } from 'src/app/Services/Authentication.service';
 
 @Component({
   selector: 'app-user-register',
@@ -16,97 +15,82 @@ import { AlertyfyToastService } from 'src/app/Services/alertyfy-toast.service';
   styleUrls: ['./user-register.component.css'],
 })
 export class UserRegisterComponent implements OnInit {
-  user: User;
-  Passwordnotmatched: boolean;
   registerationForm: FormGroup;
+  user: UserForRegister;
+  userSubmitted: boolean;
   constructor(
-    private toastr: ToastrService,
-    private formBuilder: FormBuilder,
-    private userService: UserServiceService,
+    private fb: FormBuilder,
+    private authService: AuthService,
     private alertyfy: AlertyfyToastService
   ) {}
 
   ngOnInit() {
-    this.registerationFormComponent();
+    this.createRegisterationForm();
   }
 
-  registerationFormComponent() {
-    this.registerationForm = this.formBuilder.group({
-      userName: [null, Validators.required],
-      Email: [null, [Validators.required, Validators.email]],
-      MobileNo: [null, [Validators.required, Validators.maxLength(10)]],
-      Password: [null, [Validators.required, Validators.minLength(8)]],
-      ConfirmPass: [null, [Validators.required, Validators.minLength(8)]],
-    });
+  createRegisterationForm() {
+    this.registerationForm = this.fb.group(
+      {
+        userName: [null, Validators.required],
+        email: [null, [Validators.required, Validators.email]],
+        password: [null, [Validators.required, Validators.minLength(8)]],
+        confirmPassword: [null, Validators.required],
+        mobile: [null, [Validators.required, Validators.maxLength(10)]],
+      },
+      { validators: this.passwordMatchingValidatior }
+    );
   }
 
-  passwordChecker(fg: FormGroup): Validators {
-    return fg.get('Password').value === fg.get('ConfirmPass').value
+  passwordMatchingValidatior(fg: FormGroup): Validators {
+    return fg.get('password').value === fg.get('confirmPassword').value
       ? null
-      : {
-          Passwordnotmatched: true,
-        };
+      : { notmatched: true };
   }
 
-  onsubmit() {
+  onSubmit() {
+    console.log(this.registerationForm.value);
+    this.userSubmitted = true;
+
     if (this.registerationForm.valid) {
-      console.log(this.registerationForm.value);
-
-      this.userService.addUser(this.userData());
-
-      //old toast code
-      // this.toastr.success('Form Was Submitted', 'Success');
-      this.alertyfy.success('Form Was Submitted');
-      setTimeout(() => {
-        this.registerationForm.reset();
-      }, 500);
-    } else {
-      this.alertyfy.error('Incorrect UserName or Password');
-      //old toast code
-      // this.toastr.error('Incorrect UserName or Password', 'Error');
+      this.authService.registerUser(this.userData()).subscribe(() => {
+        this.onReset();
+        this.alertyfy.success('Congrats, you are successfully registered');
+      });
     }
   }
 
-  userData(): User {
-    // here this.username,this.email etc are getter method name used for cross connection
+  onReset() {
+    this.userSubmitted = false;
+    this.registerationForm.reset();
+  }
+
+  userData(): UserForRegister {
     return (this.user = {
       userName: this.userName.value,
-      Email: this.Email.value,
-      Password: this.Password.value,
-      MobileNo: this.MobileNo.value,
+      email: this.email.value,
+      password: this.password.value,
+      mobile: this.mobile.value,
     });
   }
 
-  // toast methods for all formcontrols
-  BlankNameToast() {
-    setTimeout(() => {
-      this.toastr.error('Please Enter Name', 'Error');
-    }, 200);
-  }
-  BlankEmailToast() {
-    setTimeout(() => {
-      this.toastr.error('Please Enter valid Email', 'Error');
-    }, 200);
-  }
-  BlankMobileNoToast() {
-    setTimeout(() => {
-      this.toastr.error('Please Enter MobileNo', 'Error');
-    }, 200);
-  }
-
-  //getter methods for all formcontrols for toast
-
+  // ------------------------------------
+  // Getter methods for all form controls
+  // ------------------------------------
   get userName() {
     return this.registerationForm.get('userName') as FormControl;
   }
-  get Email() {
-    return this.registerationForm.get('Email') as FormControl;
+
+  get email() {
+    return this.registerationForm.get('email') as FormControl;
   }
-  get MobileNo() {
-    return this.registerationForm.get('MobileNo') as FormControl;
+  get password() {
+    return this.registerationForm.get('password') as FormControl;
   }
-  get Password() {
-    return this.registerationForm.get('Password') as FormControl;
+  get confirmPassword() {
+    return this.registerationForm.get('confirmPassword') as FormControl;
   }
-  // getter end
+  get mobile() {
+    return this.registerationForm.get('mobile') as FormControl;
+  }
+  // ------------------------
 }

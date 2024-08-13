@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HousingService } from 'src/app/Services/housing.service';
-import { PropertyInterface } from 'src/app/interfaces/property-interface';
+import { IPropertyBase } from 'src/app/model/ipropertybase';
+import { HousingService } from 'src/app/Services/HousingService';
 
 @Component({
   selector: 'app-property-list',
@@ -9,26 +9,49 @@ import { PropertyInterface } from 'src/app/interfaces/property-interface';
   styleUrls: ['./property-list.component.css'],
 })
 export class PropertyListComponent implements OnInit {
-  Purchaseable = 1;
-  properties: Array<PropertyInterface>;
+  SellRent = 1;
+  properties: IPropertyBase[];
+  Today = new Date();
+  City = '';
+  SearchCity = '';
+  SortbyParam = '';
+  SortDirection = 'asc';
+
   constructor(
     private route: ActivatedRoute,
-    private housingService: HousingService
+    private HousingService: HousingService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.route.snapshot.url.toString()) {
-      this.Purchaseable = 2;
-    } // means we are on rent-property url or else we are on base url
-    this.housingService.getAllProperties(this.Purchaseable).subscribe(
-      (data: PropertyInterface[]) => {
-        console.log(data);
-        console.log(this.route.snapshot.url.toString());
+      this.SellRent = 2; // Means we are on rent-property URL else we are on base URL
+    }
+    this.HousingService.getAllProperties(this.SellRent).subscribe(
+      (data) => {
         this.properties = data;
+        console.log(data);
       },
       (error) => {
+        console.log('httperror:');
         console.log(error);
       }
     );
+  }
+
+  onCityFilter() {
+    this.SearchCity = this.City;
+  }
+
+  onCityFilterClear() {
+    this.SearchCity = '';
+    this.City = '';
+  }
+
+  onSortDirection() {
+    if (this.SortDirection === 'desc') {
+      this.SortDirection = 'asc';
+    } else {
+      this.SortDirection = 'desc';
+    }
   }
 }

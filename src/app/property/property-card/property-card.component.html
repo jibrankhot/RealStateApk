@@ -1,82 +1,33 @@
-<div
-  class="row"
-  style="margin-top: 0%; margin-bottom: 5%; margin-right: 1%; margin-left: 1%"
->
-  <div class="card shadow-sm">
-    <div class="PropertyImage">
-      <img
-        src="{{ Property.Image }}"
-        alt=""
-        style="margin: 2%; margin-bottom: 0"
-      />
-    </div>
+<div class="card">
+  <div class="card-img-wrapper">
+    <img *ngIf="property.photo" class="card-img-top" src="{{property.photo}}">
+    <img *ngIf="!property.photo" class="card-img-top" src="assets/images/house_default.png">
+    <ul *ngIf="!hideIcons" class="list-inline text-center member-icons animate">
+      <li class="list-inline-item">
+        <button class="btn btn-primary" routerLink="/property-detail/{{property.id}}"><i class="far fa-edit"></i></button>
+      </li>
+      <li class="list-inline-item">
+        <button class="btn btn-primary"><i class="far fa-address-book"></i></button>
+      </li>
+    </ul>
 
-    <div
-      class="card-body"
-      style="
-        overflow: hidden;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: inline-axis;
-        text-overflow: ellipsis;
-        line-height: 21px;
-        display: -webkit-box;
-        text-overflow: ellipsis;
-      "
-    >
-      <div class="justify-content-between align-items-center">
-        <h3
-          style="
-            overflow: hidden;
-            -webkit-line-clamp: 1;
-            -webkit-text-size-adjust: auto;
-            -webkit-box-orient: vertical;
-            text-overflow: ellipsis;
+  </div>
+  <div class="card-body p-1">
+    <h1 class="mb-0"> {{property.bhk}} BHK {{property.propertyType}} </h1>
 
-            display: -webkit-box;
-            text-overflow: ellipsis;
-          "
-          class="mb-0"
-        >
-          {{ Property.BHK }} BHK {{ Property.PType }}
-        </h3>
+    in {{property.name}}
+    <span *ngIf="property.name">,</span>
+    {{property.city}}
 
-        in {{ Property.Name }}
-        <span *ngIf="Property.Name">,</span>
-        {{ Property.City }}
+    <h6  class="mt-2">{{property.furnishingType}}
+    <span *ngIf="property.furnishingType !== 'Unfurnished'">Furnished</span>
+    <span *ngIf="property.readyToMove"> | Ready to Move</span>
+    <span *ngIf="!property.readyToMove"> | Posession: {{property.estPossessionOn | date}}</span>
+    </h6>
 
-        <h6 class="mt-2">
-          {{ Property.FType }}
-          <span *ngIf="Property.FType !== 'Unfurnished'">Furnished</span> |
-          Ready to Move
-        </h6>
+    <hr class="mt-0 mb-2">
 
-        <hr class="mt-0 mb-2" />
-
-        <h6 class="mb-0">
-          Price: <span class>{{ Property.Price }} USD.</span> | Area:
-          <span>{{ Property.BuiltArea }} Sq Ft </span>
-        </h6>
-        <div
-          *ngIf="!hideIcons"
-          style="justify-content: space-between; margin-top: 13px"
-        >
-          <button
-            type="button"
-            style="margin-right: 2px"
-            class="btn btn-sm btn-secondary product-btn"
-            routerLink="property-detail/{{ Property.id }}"
-          >
-            Manage
-          </button>
-          <button
-            type="button"
-            style="margin-right: 0"
-            class="btn btn-sm btn-primary product-btn"
-          >
-            Contact
-          </button>
-        </div>
-      </div>
-    </div>
+    <h6 class="mb-0">Price: <span class="font-highlight">{{property.price}} USD.</span> |
+      Area:  <span class="font-highlight">{{property.builtArea}} Sq Ft </span> </h6>
   </div>
 </div>
