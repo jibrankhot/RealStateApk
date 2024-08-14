@@ -83,7 +83,7 @@ import { SortPipe } from './Pipes/sort.pipe';
 import { DatePipe } from '@angular/common';
 import { PhotoEditorComponent } from './property/photo-editor/photo-editor.component';
 import { HttpErrorInterceptorService } from './Services/httperor-interceptor.service';
-import { HousingService } from './Services/HousingService';
+import { HousingService } from './Services/Housing.Service';
 import { FileUploadModule } from 'ng2-file-upload';
 import { AlertyfyToastService } from './Services/alertyfy-toast.service';
 

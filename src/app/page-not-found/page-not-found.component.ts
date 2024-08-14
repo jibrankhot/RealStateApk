@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NavbarService } from '../Services/navbar-service';
+import { NavbarService } from '../Services/navbar.service';
 
 @Component({
   selector: 'app-page-not-found',

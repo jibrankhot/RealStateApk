@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HousingService } from 'src/app/Services/HousingService';
+import { HousingService } from 'src/app/Services/Housing.Service';
 import { Property } from 'src/app/model/property';
 import { NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { NgxGalleryImage } from '@kolkov/ngx-gallery';

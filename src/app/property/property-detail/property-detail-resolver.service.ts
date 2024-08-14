@@ -7,7 +7,7 @@ import {
 } from '@angular/router';
 import { Property } from 'src/app/model/property';
 import { Observable, of } from 'rxjs';
-import { HousingService } from 'src/app/Services/HousingService';
+import { HousingService } from 'src/app/Services/Housing.Service';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable({

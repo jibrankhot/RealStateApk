@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Property } from 'src/app/model/property';
-import { HousingService } from 'src/app/Services/HousingService';
+import { HousingService } from 'src/app/Services/Housing.Service';
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from 'src/environments/environment';
 import { AlertyfyToastService } from 'src/app/Services/alertyfy-toast.service';
